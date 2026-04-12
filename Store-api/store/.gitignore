@@ -1,0 +1,46 @@
+HELP.md
+
+### Maven ###
+target/
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### Maven Wrapper ###
+#.mvn/wrapper/maven-wrapper.jar
+
+### Logs ###
+*.log
+logs/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### Gradle ###
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+### OS ###
+.DS_Store
+Thumbs.db
+
+### Env configs ###
+application-dev.properties
+application-prod.properties
