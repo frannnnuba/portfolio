@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.store.api.DTOs.ProductDTO;
 import com.store.api.Service.ReadProductsService;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -19,10 +21,19 @@ public class ReadOnlyProductsController {
     @Autowired
     private ReadProductsService readService;
 
-    /*@GetMapping
+    @GetMapping("/list_all")
     public Set<?> listAllProducts(@RequestParam String param) {
-        return new Set<DTOProduct>();
-    }*/
+        return readService.findAll();
+    }
     
-
+    @GetMapping("/{aCategory}")
+    public Set<ProductDTO> findByCategory (@PathVariable String aCategory) {
+        return readService.findByCategory(aCategory);
+    }
+    
+    @GetMapping("/price_of/{a_product_name}")
+    public Double priceOf(@PathVariable String a_product_name) {
+        return readService.priceOf(a_product_name);
+    }
+    
 }

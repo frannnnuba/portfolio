@@ -31,4 +31,7 @@ public class Product {
 
     @Column(nullable = false)
     private Long stock;
+
+    @Column(nullable = false)
+    private String category;
 }
