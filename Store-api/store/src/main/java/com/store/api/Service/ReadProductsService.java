@@ -37,4 +37,10 @@ public class ReadProductsService {
         map(MapperProduct::toDto).map(ProductDTO::getPrice).
         orElseThrow(()-> new RuntimeException("No product found with such name"));
     }
+
+    public Double priceById(Long id){
+       return  products_repository.findById(id).
+        map(MapperProduct::toDto).map(ProductDTO::getPrice).
+        orElseThrow(()-> new RuntimeException("No product found with such name"));
+    }
 }

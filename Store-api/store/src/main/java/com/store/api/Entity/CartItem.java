@@ -15,10 +15,40 @@ public class CartItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private Product product;
+    @Column(name = "product_id",nullable = false)
+    private Long product_id;
 
-    @Column(nullable = false)
+    @Column(name="amount",nullable = false)
     private Long amount;
+
+
+    @Column(name="cart",nullable = false)
+    private Cart cart;
+
+    public Long getProduct_id() {
+        return product_id;
+    }
+
+    public Long getAmount() {
+        return amount;
+    }
+
+    public void setProduct_id(Long product_id) {
+        this.product_id = product_id;
+    }
+
+    public void setAmount(Long amount) {
+        this.amount = amount;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
+
+    
 }
 
