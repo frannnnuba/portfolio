@@ -10,6 +10,7 @@ import com.store.api.Entity.CartItem;
 import com.store.api.Entity.Order;
 import com.store.api.Entity.OrderItem;
 import com.store.api.Entity.Product;
+import com.store.api.Entity.StateOfOrder;
 import com.store.api.Repository.CartRepository;
 import com.store.api.Repository.OrderRepository;
 import com.store.api.Repository.ProductsRepository;
@@ -37,6 +38,7 @@ public class CheckoutService {
         cartItems.forEach(i->mapCartItemToOrderItem(newOrder, i));
         newOrder.setUser(cart.getUser());
         newOrder.setTotal(cart.precalculateTotal());
+        newOrder.setState(StateOfOrder.PENDING);
         order_repo.save(newOrder);
         cart_repo.delete(cart);
 

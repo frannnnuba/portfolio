@@ -12,6 +12,8 @@ import com.store.api.DTOs.ProductDTO;
 import com.store.api.Mappers.MapperProduct;
 import com.store.api.Repository.ProductsRepository;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class ReadProductsService {
 
@@ -24,23 +26,20 @@ public class ReadProductsService {
     }
     
     public Set<ProductDTO> findByCategory(String aCategory){
-        Set<ProductDTO> aSetOfCategory = products_repository.findByCategory(aCategory).stream().map(MapperProduct::toDto).
-        collect(Collectors.toSet());
-        if(aSetOfCategory.isEmpty()){
-            throw new RuntimeException("No match for category");
-        }
+        Set<ProductDTO> aSetOfCategory = products_repository.findByCategory(aCategory).
+        stream().map(MapperProduct::toDto).collect(Collectors.toSet());
         return aSetOfCategory;
     }
 
     public Double priceOf(String item_name){
        return  products_repository.findByProductName(item_name).
         map(MapperProduct::toDto).map(ProductDTO::getPrice).
-        orElseThrow(()-> new RuntimeException("No product found with such name"));
+        orElseThrow(()-> new EntityNotFoundException());
     }
 
     public Double priceById(Long id){
        return  products_repository.findById(id).
         map(MapperProduct::toDto).map(ProductDTO::getPrice).
-        orElseThrow(()-> new RuntimeException("No product found with such name"));
+        orElseThrow(()-> new EntityNotFoundException());
     }
 }

@@ -6,6 +6,7 @@ import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -72,7 +73,7 @@ public class Cart {
             }
         }else{
             removeItem(productId);
-            throw new RuntimeException("Item isn't present on cart");
+            throw new EntityNotFoundException();
         }
     }
 
@@ -91,7 +92,7 @@ public class Cart {
 
     public void setAmount(Long anAmount,Long productId){
         if(anAmount <= 0){
-            throw new RuntimeException();
+            throw new IllegalArgumentException();
         }
 
         Optional<CartItem> existingItem = getExistingItem(productId);

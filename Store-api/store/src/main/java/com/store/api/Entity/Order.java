@@ -37,9 +37,22 @@ public class Order {
     @JoinColumn(name="user",nullable = false)
     private Users user;
 
+    public Boolean isApproved(){
+        return state== StateOfOrder.PAID;
+    }
 
+    public Boolean isPending(){
+        return state== StateOfOrder.PENDING;
+    }
     
     public void addItem(OrderItem oi){
-        
+        order_items.add(oi);
+    }
+    public void markPaid(){
+        setState(StateOfOrder.PAID);
+    }
+
+    public void markPaymentFailed(){
+        setState(StateOfOrder.PAYMENT_FAILED);
     }
 }
