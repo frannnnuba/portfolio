@@ -3,6 +3,7 @@ package com.store.api.Entity;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -23,10 +24,22 @@ public class Order {
     @GeneratedValue(strategy = GenerationType .IDENTITY)
     private Long id;
 
+    @Column(name="total",nullable = false)
+    private Double total;
+
+    @Column(name="state",nullable = false)
+    private StateOfOrder state;
+
     @OneToMany(mappedBy = "order",cascade = CascadeType.ALL)
     private Set<OrderItem> order_items; 
 
     @ManyToOne
-    @JoinColumn(name="user_id",nullable = false)
+    @JoinColumn(name="user",nullable = false)
     private Users user;
+
+
+    
+    public void addItem(OrderItem oi){
+        
+    }
 }

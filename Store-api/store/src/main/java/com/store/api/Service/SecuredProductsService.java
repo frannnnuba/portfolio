@@ -41,7 +41,7 @@ public class SecuredProductsService {
         Optional<Product> prod = prod_repo.findById(id);
         if(prod.isPresent()){
            Product stored= prod.get();
-           stored.setProduct_name(aDTO.getProduct_name());
+           stored.setProductName(aDTO.getProduct_name());
            stored.setBrand_name(aDTO.getBrand_name());
            stored.setPrice(aDTO.getPrice());
            stored.setStock(aDTO.getStock());
@@ -60,7 +60,7 @@ public class SecuredProductsService {
             Product product = prod.get();
             updates.forEach((key,value)-> {switch (key) {
                 case "product_name":
-                    product.setProduct_name((String) value);
+                    product.setProductName((String) value);
                     break;
                 case "brand_name":
                     product.setBrand_name((String) value);

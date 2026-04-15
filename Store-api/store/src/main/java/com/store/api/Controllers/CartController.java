@@ -79,7 +79,7 @@ public class CartController {
     }
 
     ///////////PatchMethods//////////////////////
-    @PatchMapping("/set_amount/{anAmount}/of_item/{cartItemId/on_cart/{cartId}")
+    @PatchMapping("/set_amount/{anAmount}/of_item/{cartItemId}/on_cart/{cartId}")
     public void setAmount(@PathVariable Long anAmount,@PathVariable Long itemId,@PathVariable Long cartId){
         cart_serv.setAmount(anAmount,itemId,cartId);
     }

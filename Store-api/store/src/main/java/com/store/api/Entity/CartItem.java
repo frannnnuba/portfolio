@@ -6,10 +6,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Data;
 
 @Entity
 @Table(name = "cat_item")
+@Data
 public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,37 +22,15 @@ public class CartItem {
     @Column(name = "product_id",nullable = false)
     private Long product_id;
 
+    @Column(name="price",nullable = false)
+    private Double price;
+
     @Column(name="amount",nullable = false)
     private Long amount;
 
-
-    @Column(name="cart",nullable = false)
+    @ManyToOne
+    @JoinColumn(name ="cart_id")
     private Cart cart;
-
-    public Long getProduct_id() {
-        return product_id;
-    }
-
-    public Long getAmount() {
-        return amount;
-    }
-
-    public void setProduct_id(Long product_id) {
-        this.product_id = product_id;
-    }
-
-    public void setAmount(Long amount) {
-        this.amount = amount;
-    }
-
-    public Cart getCart() {
-        return cart;
-    }
-
-    public void setCart(Cart cart) {
-        this.cart = cart;
-    }
-
     
 }
 
