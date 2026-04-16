@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.store.api.DTOs.CartDTO;
+import com.store.api.DTOs.CartItemDTO;
 import com.store.api.Entity.CartItem;
 import com.store.api.Service.CartService;
 
@@ -27,7 +28,7 @@ public class CartController {
 
     //security will be added shortly after
     @GetMapping("/list/{cart_id}")
-    public Set<CartItem> listCartItems(@PathVariable Long cartId){
+    public Set<CartItemDTO> listCartItems(@PathVariable Long cartId){
         return cart_serv.listCartItems(cartId);
     }
 
@@ -43,7 +44,7 @@ public class CartController {
     
     ///////////////PostMethods//////////////
     @PostMapping("/create")
-    public Long createCart(){
+    public CartDTO createCart(){
         return cart_serv.createCart();
     }
 

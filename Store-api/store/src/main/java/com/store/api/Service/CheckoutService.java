@@ -37,7 +37,7 @@ public class CheckoutService {
         Order newOrder = new Order();
         cartItems.forEach(i->mapCartItemToOrderItem(newOrder, i));
         newOrder.setUser(cart.getUser());
-        newOrder.setTotal(cart.precalculateTotal());
+        newOrder.setTotal(calculateTotal(cart));
         newOrder.setState(StateOfOrder.PENDING);
         order_repo.save(newOrder);
         cart_repo.delete(cart);
@@ -62,5 +62,18 @@ public class CheckoutService {
             throw new RuntimeException("Can't checkout empty cart");
         }
     }
+ 
     
+    private double calculateTotal(Cart cart) {
+
+        double total = 0.0;
+
+        for (CartItem item : cart.getItems_on_cart()) {
+            Product prod = prod_repo.findById(item.getProduct_id())
+                .orElseThrow();
+
+            total += prod.getPrice() * item.getAmount();
+        }
+        return total;
+    }
 }

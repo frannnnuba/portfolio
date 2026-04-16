@@ -11,8 +11,6 @@ import com.store.api.Service.ReadProductsService;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-
 
 @RestController
 @RequestMapping("api/products/public")
@@ -22,7 +20,7 @@ public class ReadOnlyProductsController {
     private ReadProductsService readService;
 
     @GetMapping("/list_all")
-    public Set<?> listAllProducts(@RequestParam String param) {
+    public Set<?> listAllProducts(String param) {
         return readService.findAll();
     }
     

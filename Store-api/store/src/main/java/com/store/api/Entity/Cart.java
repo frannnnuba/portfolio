@@ -35,11 +35,10 @@ public class Cart {
 
     
     /////METHODS/////
-    public Double precalculateTotal(){
-        return items_on_cart
-        .stream().
-        map(item ->(item.getAmount()* item.getPrice())).reduce(0.00, Double::sum);
-    }
+    //public Double precalculateTotal(){
+      //  return items_on_cart
+        //ap(item ->(item.getAmount()* item.getPrice())).reduce(0.00, Double::sum);
+    //}
 
     public Optional<CartItem> getExistingItem(Long productId) {
         return items_on_cart
@@ -85,7 +84,7 @@ public class Cart {
     public void removeItem(Long prodId){
     Optional<CartItem> existingItem = getExistingItem(prodId);
     if(existingItem.isPresent()){
-            items_on_cart.remove(existingItem.get());
+            items_on_cart.removeIf(i -> i.getProduct_id().equals(prodId));
             existingItem.get().setCart(null);
         }
     }

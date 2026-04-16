@@ -74,8 +74,8 @@ public class Product {
     }
 
     public void changeStock(Long stock){
-        if(stock<= 0){
-            throw new IllegalArgumentException("Price must be over 0.00");
+        if(stock< 0){
+            throw new IllegalArgumentException("Stock must be equal or over 0");
         }
         setStock(stock);
     }
@@ -88,7 +88,7 @@ public class Product {
     }
 
     public boolean checkStock(Long amount){
-        boolean flag = (stock - amount)>0; 
+        boolean flag = (stock - amount)>=0; 
         return flag;
     }
 
