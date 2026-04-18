@@ -6,11 +6,6 @@ import com.store.api.Entity.OrderItem;
 import com.store.api.Entity.StateOfOrder;
 import com.store.api.Entity.Users;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 
 public class OrderDTO {
 

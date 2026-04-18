@@ -11,10 +11,12 @@ import com.store.api.DTOs.CartItemDTO;
 import com.store.api.Entity.Cart;
 import com.store.api.Entity.CartItem;
 import com.store.api.Entity.Product;
+import com.store.api.Entity.Users;
 import com.store.api.Mappers.MapperCart;
 import com.store.api.Mappers.MapperCartItem;
 import com.store.api.Repository.CartRepository;
 import com.store.api.Repository.ProductsRepository;
+
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -27,11 +29,12 @@ public class CartService {
 
     public CartService(CartRepository cart_repo,ProductsRepository prod_repo){
         this.cart_repo = cart_repo;
-        this.prod_repo = prod_repo;
+        this.prod_repo = prod_repo;  
     }
 
-    public CartDTO createCart(){
+    public CartDTO createCart(Users user){
         Cart cart = new Cart();
+        cart.setUser(user);
         cart_repo.save(cart);
         return MapperCart.toDTO(cart);
     }

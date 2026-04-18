@@ -12,7 +12,7 @@ public class MapperProduct {
 
     public static Product toEntity(ProductDTO aProductDTO){
         Product newProduct = new Product();
-        newProduct.setId(aProductDTO.getId());
+       // newProduct.setId(aProductDTO.getId());
         newProduct.setBrand_name(aProductDTO.getBrand_name());
         newProduct.setProductName(aProductDTO.getProduct_name());
         newProduct.setPrice(aProductDTO.getPrice());

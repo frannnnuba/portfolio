@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -34,7 +35,6 @@ public class SecuredProductsServiceTest {
 
     @Test
     void testAddProductToCatalogue() {
-        Product prod = createProduct();
         ProductDTO prodDTO = MapperProduct.toDto(prod);
         when(prod_repo.findById(1L)).thenReturn(Optional.empty());
         ProductDTO prodAdded = prod_serv.addProductToCatalogue(prodDTO);        
@@ -43,7 +43,6 @@ public class SecuredProductsServiceTest {
 
     @Test
     void testCantAddProductAlredyInCatalogue() {
-        Product prod = createProduct();
         ProductDTO prodDTO = MapperProduct.toDto(prod);
         when(prod_repo.findById(1L)).thenReturn(Optional.of(prod));
         assertThrows(IllegalStateException.class,
@@ -52,7 +51,6 @@ public class SecuredProductsServiceTest {
 
     @Test
     void testCheckAndDiscount() {
-        Product prod = createProduct();
         when(prod_repo.findById(1L)).thenReturn(Optional.of(prod));
         prod_serv.checkAndDiscount(1L, 3L);
         assertEquals(0L,prod.getStock());;
@@ -60,7 +58,6 @@ public class SecuredProductsServiceTest {
 
     @Test
     void testDoesntDiscountIfNotEnoughStock() {
-        Product prod = createProduct();
         when(prod_repo.findById(1L)).thenReturn(Optional.of(prod));
         prod_serv.checkAndDiscount(1L, 4L);
         assertEquals(3L,prod.getStock());
@@ -68,7 +65,6 @@ public class SecuredProductsServiceTest {
 
     @Test
     void testModifyProduct() {
-        Product prod = createProduct();
         ProductDTO toChange = createProductDTO();
         assertNotEquals(prod.getProductName(), toChange.getProduct_name());
         assertNotEquals(prod.getBrand_name(), toChange.getBrand_name());
@@ -86,7 +82,6 @@ public class SecuredProductsServiceTest {
 
     @Test
     void testPatchPrice() {
-        Product prod = createProduct();
         Map<String,Object> updates = new HashMap<String,Object>();
         updates.put("price", 15.00);
         when(prod_repo.findById(1L)).thenReturn(Optional.of(prod));
@@ -96,7 +91,6 @@ public class SecuredProductsServiceTest {
 
     @Test
     void testPatchStock() {
-         Product prod = createProduct();
         Map<String,Object> updates = new HashMap<String,Object>();
         updates.put("stock", 10L);
         when(prod_repo.findById(1L)).thenReturn(Optional.of(prod));
@@ -106,7 +100,6 @@ public class SecuredProductsServiceTest {
 
     @Test
     void testRemoveProductFromCatalogue() {
-        Product prod = createProduct();
         when(prod_repo.findById(1L)).thenReturn(Optional.of(prod));
         String msg =prod_serv.removeProductFromCatalogue(1L);
         verify(prod_repo).deleteById(1L);
@@ -120,15 +113,17 @@ public class SecuredProductsServiceTest {
             prod_serv.removeProductFromCatalogue(1L);});
     }
 
-    public Product createProduct(){
-        Product prod =new Product();
+    private Product prod;
+
+    @BeforeEach
+    public void createProduct(){
+        prod =new Product();
         prod.setId(1L);
         prod.setProductName("cheese");
         prod.setBrand_name("Milkaut");
         prod.setPrice(4.00);
         prod.setStock(3L);
         prod.setCategory("Dairy");
-        return prod;
     }
 
     public ProductDTO createProductDTO(){

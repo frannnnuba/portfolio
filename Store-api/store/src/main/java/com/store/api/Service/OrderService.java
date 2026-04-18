@@ -10,7 +10,6 @@ import com.store.api.DTOs.OrderDTO;
 import com.store.api.DTOs.OrderItemDTO;
 import com.store.api.Entity.Order;
 import com.store.api.Entity.OrderItem;
-import com.store.api.Entity.Product;
 import com.store.api.Mappers.MapperOrder;
 import com.store.api.Mappers.MapperOrderITem;
 import com.store.api.Repository.OrderRepository;

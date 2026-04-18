@@ -21,14 +21,9 @@ public class SecuredProductsService {
 
     @Transactional
     public ProductDTO addProductToCatalogue(ProductDTO aNewProductDTO){
-        if(prod_repo.findById(aNewProductDTO.getId()).isEmpty()){
-            Product prod= MapperProduct.toEntity(aNewProductDTO);
-            prod_repo.save(prod);
-            return MapperProduct.toDto(prod);
-
-        }else{
-            throw new IllegalStateException("Product already exists");
-        }
+        Product prod= MapperProduct.toEntity(aNewProductDTO);
+        prod_repo.save(prod);
+        return MapperProduct.toDto(prod);
     } 
 
     public String removeProductFromCatalogue(Long id){

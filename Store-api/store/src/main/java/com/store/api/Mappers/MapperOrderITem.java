@@ -2,7 +2,6 @@ package com.store.api.Mappers;
 
 import com.store.api.DTOs.OrderItemDTO;
 import com.store.api.Entity.OrderItem;
-import com.store.api.Entity.Product;
 
 public class MapperOrderITem {
 
