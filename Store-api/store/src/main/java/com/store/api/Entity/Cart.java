@@ -4,9 +4,10 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import com.store.api.BussinesExceptions.ProductNotFoundException;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -72,7 +73,7 @@ public class Cart {
             }
         }else{
             removeItem(productId);
-            throw new EntityNotFoundException();
+            throw new ProductNotFoundException("Product not found");
         }
     }
 

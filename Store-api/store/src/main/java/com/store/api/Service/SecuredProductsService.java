@@ -7,12 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.store.api.BussinesExceptions.OutOfStockException;
+import com.store.api.BussinesExceptions.ProductNotFoundException;
 import com.store.api.DTOs.ProductDTO;
 import com.store.api.Entity.Product;
 import com.store.api.Mappers.MapperProduct;
 import com.store.api.Repository.ProductsRepository;
 
-import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class SecuredProductsService {
@@ -28,7 +29,7 @@ public class SecuredProductsService {
 
     public String removeProductFromCatalogue(Long id){
         prod_repo.findById(id).orElseThrow(
-            ()-> new EntityNotFoundException("Can't delete not present product"));
+            ()-> new ProductNotFoundException("Can't delete not present product"));
         prod_repo.deleteById(id);
         return "Product deleted successfully";
     } 
@@ -41,7 +42,7 @@ public class SecuredProductsService {
            stored.modifyProduct(aDTO);
            return MapperProduct.toDto(stored);
         }else{
-            throw new EntityNotFoundException("Product doesn't exist");
+            throw new ProductNotFoundException("Product doesn't exist");
         }
     }
 
@@ -71,14 +72,16 @@ public class SecuredProductsService {
             //prod_repo.save(product);
             return MapperProduct.toDto(product);
         }else{
-            throw new EntityNotFoundException("Product doesn't exist");
+            throw new ProductNotFoundException("Product doesn't exist");
         }
     }
 
     public void checkAndDiscount(Long prodId,Long amount){
-        Product prod = prod_repo.findById(prodId).orElseThrow(()->new EntityNotFoundException());
+        Product prod = prod_repo.findById(prodId).orElseThrow(()->new ProductNotFoundException("Product doesn't exist"));
         if(prod.checkStock(amount)){
             prod.decrementStock(amount);
+        }else{
+            throw new OutOfStockException("Not enough stock");
         }
     }
 }

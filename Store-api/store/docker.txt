@@ -1,0 +1,7 @@
+-it agregado permite hacer interactiva , para que no se ejecute y cierre
+docker build -t "nombre imagen" . (el . indica que es en el dir actual)
+docker run -p 3000:3000 (para decirle al puerto 3000 del contenedor con el verdadero)
+
+docker compose: permite setear un run grande para setear variables de ent y persistir datos,  corre todo en una acción
+
+para una network (por def) ping nombre container B lo referencia en container A.

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
-@RequestMapping("api/products/public")
+@RequestMapping("/api/products/public")
 public class ReadOnlyProductsController {
 
     @Autowired
@@ -22,6 +22,11 @@ public class ReadOnlyProductsController {
     @GetMapping("/list_all")
     public Set<?> listAllProducts(String param) {
         return readService.findAll();
+    }
+
+    @GetMapping("/findBy/{id}")
+    public ProductDTO findById(@PathVariable Long id) {
+        return readService.findById(id);
     }
     
     @GetMapping("/{aCategory}")

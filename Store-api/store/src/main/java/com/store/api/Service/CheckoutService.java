@@ -5,12 +5,15 @@ import java.util.Set;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.store.api.BussinesExceptions.EmptyCartException;
+import com.store.api.DTOs.OrderDTO;
 import com.store.api.Entity.Cart;
 import com.store.api.Entity.CartItem;
 import com.store.api.Entity.Order;
 import com.store.api.Entity.OrderItem;
 import com.store.api.Entity.Product;
 import com.store.api.Entity.StateOfOrder;
+import com.store.api.Mappers.MapperOrder;
 import com.store.api.Repository.CartRepository;
 import com.store.api.Repository.OrderRepository;
 import com.store.api.Repository.ProductsRepository;
@@ -28,7 +31,7 @@ public class CheckoutService {
     }
 
     @Transactional
-    public Long checkout(Long cartId){
+    public OrderDTO checkout(Long cartId){
         Cart cart = cart_repo.findById(cartId).orElseThrow();
 
         Set<CartItem> cartItems = cart.getItems_on_cart();
@@ -42,7 +45,7 @@ public class CheckoutService {
         order_repo.save(newOrder);
         cart_repo.delete(cart);
 
-        return newOrder.getId();
+        return MapperOrder.toDto(newOrder);
     }
 
     private void mapCartItemToOrderItem(Order newOrder, CartItem ci) {
@@ -59,7 +62,7 @@ public class CheckoutService {
 
     private void assertItemsNoEmpty(Set<CartItem> cartItems) {
         if(cartItems.isEmpty()){
-            throw new RuntimeException("Can't checkout empty cart");
+            throw new EmptyCartException("Can't checkout empty cart");
         }
     }
  

@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.store.api.DTOs.CartDTO;
 import com.store.api.DTOs.CartItemDTO;
+import com.store.api.DTOs.OrderDTO;
 import com.store.api.Entity.Users;
 import com.store.api.Service.CartService;
+import com.store.api.Service.CheckoutService;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,14 +20,17 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 
+
 @RestController
 @RequestMapping("api/cart")
 public class CartController {
 
     private final CartService cart_serv;
+    private final CheckoutService checkout_serv;
 
-    public CartController( CartService cart_serv) {
+    public CartController( CartService cart_serv,CheckoutService checkout_serv){
         this.cart_serv = cart_serv;
+        this.checkout_serv = checkout_serv;
     } 
 
     @GetMapping("/list/{cart_id}")
@@ -76,6 +81,12 @@ public class CartController {
     public void decrementItem(@PathVariable Long cartId,@PathVariable Long productId){
         cart_serv.substractItem(cartId, productId, 1L);
     }
+
+    @PostMapping("/checkout/{id}")
+    public OrderDTO checkout(@PathVariable Long id) {
+        return checkout_serv.checkout(id);
+    }
+    
 
     //////////////DeleteMethods//////////////////
     @DeleteMapping("/empty/{cartId}")

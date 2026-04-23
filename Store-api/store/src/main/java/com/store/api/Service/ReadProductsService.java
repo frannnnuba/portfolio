@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.store.api.BussinesExceptions.ProductNotFoundException;
 import com.store.api.DTOs.ProductDTO;
 import com.store.api.Mappers.MapperProduct;
 import com.store.api.Repository.ProductsRepository;
@@ -25,6 +26,11 @@ public class ReadProductsService {
         map(MapperProduct::toDto).collect(Collectors.toSet());
     }
     
+    public ProductDTO findById(Long id){
+        return MapperProduct.toDto(products_repository.findById(id).
+        orElseThrow(()->new ProductNotFoundException("Product not found")));
+    }
+
     public Set<ProductDTO> findByCategory(String aCategory){
         Set<ProductDTO> aSetOfCategory = products_repository.findByCategory(aCategory).
         stream().map(MapperProduct::toDto).collect(Collectors.toSet());
